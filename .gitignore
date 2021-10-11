@@ -24,3 +24,4 @@ Thumbs.db
 /source/web/assets/*
 /mysqldata/*
 /source/runtime/*
+/logs
