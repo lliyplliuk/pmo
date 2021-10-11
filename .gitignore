@@ -1,0 +1,26 @@
+# phpstorm project files
+.idea
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/source/vendor
+
+# composer itself is not needed
+/source/composer.phar
+
+/source/tests/_output/*
+/source/tests/_support/_generated
+
+#vagrant folder
+/.vagrant
+
+/source/web/assets/*
+/mysqldata/*
+/source/runtime/*

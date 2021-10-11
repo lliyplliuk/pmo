@@ -1,0 +1,46 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-conf/dev/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./source:/app
+    links:
+      - php
+  php:
+    build:
+      context: .
+      dockerfile: ./docker-conf/php.Dockerfile
+    volumes:
+      - ./source:/app
+    links:
+      - smtp
+      - memcached
+  smtp:
+    image: namshi/smtp
+    env_file:
+      - ./docker-conf/dev/smtp.env
+  memcached:
+    image: memcached
+  masterDb:
+    image: mariadb:10.0.22
+    environment:
+      MYSQL_ROOT_PASSWORD: '12qwASZX'
+      MYSQL_USER: 'pmo_user'
+      MYSQL_PASSWORD: 'pmo12qwASZX'
+      MYSQL_DATABASE: 'pmo_bd'
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    links:
+      - masterDb
+    ports:
+      - 1234:80
+    environment:
+      PMA_HOST: masterDb
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 3000M
+      MAX_EXECUTION_TIME: 6000
